@@ -1,17 +1,21 @@
 from vector import *
 
-global DepthCue,dc_ColorFar,dc_ColorNear,dc_DepthFar,dc_DepthNear,dc_Levels,RefCube,RotSpace,RotPlane,Vangle3,Vangle4,Project3,Project4,camp,Form3,Form4,Over4,To3,To4,Up3,Up4
-global Data4Radius,Dist3Auto,Dist3Initial,Dist4Auto,Dist4Initial,Root3,Tan2Vangle3,Tan2Vangle4,dc_DFar_DNear
-global VertList,EdgeList,NumEdges,NumVerts
+# DepthCue,dc_ColorFar,dc_ColorNear,dc_DepthFar,dc_DepthNear,dc_Levels,RefCube,RotSpace,RotPlane,Vangle3,Vangle4,Project3,Project4,camp,Form3,Form4,Over4,To3,To4,Up3,Up4
+# Data4Radius,Dist3Auto,Dist3Initial,Dist4Auto,Dist4Initial,Root3,Tan2Vangle3,Tan2Vangle4,dc_DFar_DNear
+# Va, Vb, Vc, Wa, Wb, Wc, Wd
+# VertList,EdgeList,NumEdges,NumVerts
 
-cmap = ((  0,  0,  0),(120,120,120),(  0,255,  0),(255,255,  0),
-        (  0,  0,255),(255,  0,255),(  0,255,255),(255,255,255),
-        (255,  0,  0),(200,200,200),(100,100,100),(188,255,  0),
-        (  0,  0,128),(  0,128,128),(  0,256,128),(128,  0,128),
-        (128,128,128),(128,256,128),(256,128,128),(256,256,128),
-        (  0,128,  0),(  0,128,256),(128,128,  0),(128,128,256),
-        (256,128,256),(128,  0,  0),(128,  0,256),(128,256,  0)) #Color Map
-for i in range(512): cmap.append((0, 0, 0))
+Va = Vector3();Vb = Vector3();Vc = Vector3()
+Wa = Vector4();Wb = Vector4();Wc = Vector4();Wd = Vector4()
+
+cmap = [[  0,  0,  0],[120,120,120],[  0,255,  0],[255,255,  0],
+        [  0,  0,255],[255,  0,255],[  0,255,255],[255,255,255],
+        [255,  0,  0],[200,200,200],[100,100,100],[188,255,  0],
+        [  0,  0,128],[  0,128,128],[  0,256,128],[128,  0,128],
+        [128,128,128],[128,256,128],[256,128,128],[256,256,128],
+        [  0,128,  0],[  0,128,256],[128,128,  0],[128,128,256],
+        [256,128,256],[128,  0,  0],[128,  0,256],[128,256,  0]] #Color Map
+for i in range(512): cmap.append([0, 0, 0])
 
 From3 = Vector3(10,11,13)  #3D Viewpoint
 To3   = Vector3(0,0,0)     #3D Target Point
@@ -36,6 +40,16 @@ RotPlane = 0                         #ushort / Rotation Plane, Index to `rp'
 Project3 = 1                         #uchar / 3D View Type
 Project4 = 1                         #uchar / 4D View Type
 
+RefCubeVert = [Vertex(i) for i in ((-1,-1,-1, 0),(-1,-1, 1, 0),
+                                   (-1, 1, 1, 0),(-1, 1,-1, 0),
+                                   ( 1,-1,-1, 0),( 1,-1, 1, 0),
+                                   ( 1, 1, 1, 0),( 1, 1,-1, 0))]
+RefCubeEdge = [Edge(i) for i in ((0,1,1), (1,2,1), (2,3,1), (3,0,1), 
+                                 (4,5,1), (5,6,1), (6,7,1), (7,4,1),
+                                 (0,4,1), (1,5,1), (2,6,1), (3,7,1))]
+rp = [[0, 1, 2, 0, 1, 2],[1, 2, 0, 3, 3, 3]]
+rptext = ["XY", "YZ", "ZX", "XW", "YW", "ZW"]
+snapname = "snapshots"
 
 #Defined Constants
 DB_DEPTHCUE=0

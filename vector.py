@@ -94,3 +94,16 @@ class Vector4:
         self.w = - (u[0] * D) + (u[1] * B) - (u[2] * A)
         
         #return Vector4(x, y, z, w)
+
+class Vertex:
+    def __init__(self, position:tuple):
+        (x, y, z, w) = position
+        self.position = Vector4(x, y, z, w)
+        self.project = Vector3(x, y, z)
+        (self.x, self.y, self.depth) = (0, 0, 0)
+
+class Edge:
+    def __init__(self, arg:tuple):
+        self.v1 = arg[0]
+        self.v2 = arg[1]
+        self.color = arg[2]
